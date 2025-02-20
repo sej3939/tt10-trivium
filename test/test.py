@@ -52,7 +52,7 @@ async def test_project(dut):
         for j in range(0,80):
             await ClockCycles(dut.clk, 1)
             keystream += str(dut.keystream_bit.value)
-        dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper()}, testing keystream: {hex(bin_list_to_int_bitwise(trivium_inst.keystream(80)))[2:].upper()}")
+        #dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper()}, testing keystream: {hex(bin_list_to_int_bitwise(trivium_inst.keystream(80)))[2:].upper()}")
         assert hex(int(keystream, 2))[2:].upper() == hex(bin_list_to_int_bitwise(trivium_inst.keystream(80)))[2:].upper()
         
 
