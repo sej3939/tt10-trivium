@@ -1,4 +1,4 @@
-module tt_trivium (
+module trivium (
     input wire clk,
     input wire rst,         // Reset signal
     input wire init,        // Initialization trigger
