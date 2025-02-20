@@ -5,8 +5,6 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
-keystream = ""
-
 @cocotb.test()
 async def test_project(dut):
     dut._log.info("Start")
@@ -29,7 +27,8 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 1)
     # Set the input values you want to test
 
-    # Wait for one clock cycle to see the output values
+    # Wait for clock cycles to see the output values
+    keystream = ""
     for i in range(0,80):
         await ClockCycles(dut.clk, 1)
         keystream += str(dut.keystream_bit.value)
