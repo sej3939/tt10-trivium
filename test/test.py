@@ -5,7 +5,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
-keystream = 0
+keystream = ""
 
 @cocotb.test()
 async def test_project(dut):
@@ -32,11 +32,7 @@ async def test_project(dut):
     # Wait for one clock cycle to see the output values
     for i in range(0,80):
         await ClockCycles(dut.clk, 1)
-        if (i == 0):
-            keystream = dut.keystream_bit.value
-        else:
-            keystream = keystream << 1
-            keystream += dut.keystream_bit.value
+            keystream += str(dut.keystream_bit.value)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
