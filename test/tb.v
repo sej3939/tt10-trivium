@@ -25,7 +25,7 @@ module tb ();
    // EXTRA IO
   reg [79:0] key;
   reg [79:0] iv;
-  wire keystream_bit;
+  reg keystream_bit;
 
 `ifdef GL_TEST
   wire VPWR = 1'b1;
