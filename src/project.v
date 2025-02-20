@@ -29,8 +29,8 @@ module tt_um_example (
         .clk(clk),
         .rst(rst_n),
         .enable(ena),
-        .key(key),
-        .iv(iv),
+        .key(key[79:0]),
+        .iv(iv[79:0]),
         .keystream_bit(keystream_bit)
 );
 
