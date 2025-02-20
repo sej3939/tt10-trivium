@@ -37,7 +37,7 @@ async def test_project(dut):
     key = 0x9719CFC92A9FF688F9AA
     iv = 0xECBB76B09AFF71D0D151
     # Wait for clock cycles to see the output values
-    for i in range(0,10):
+    for i in range(0,1000):
         keystream = ""
         dut.rst_n.value = 0
         dut.key.value = key
@@ -52,9 +52,9 @@ async def test_project(dut):
         for j in range(0,80):
             await ClockCycles(dut.clk, 1)
             keystream += str(dut.keystream_bit.value)
-        ideal_keystream = trivium_inst.keystream(80)
-        dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper()}, testing keystream: {hex(bin_list_to_int_bitwise(ideal_keystream))[2:].upper()}")
-        assert int(keystream, 2) == bin_list_to_int_bitwise(ideal_keystream)
+        actual_keystream = trivium_inst.keystream(80)
+        dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper()}, actual keystream: {hex(bin_list_to_int_bitwise(actual_keystream))[2:].upper()}")
+        assert int(keystream, 2) == bin_list_to_int_bitwise(actual_keystream)
         
 
     # Keep testing the module by changing the input values, waiting for
