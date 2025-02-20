@@ -9,6 +9,9 @@ from cocotb.triggers import ClockCycles
 
 from trivium_uisyudha import Trivium
 
+def int_to_bin_list_bitwise(n, bit_length):
+    return [(n >> i) & 1 for i in range(bit_length - 1, -1, -1)]
+
 @cocotb.test()
 async def test_project(dut):
     dut._log.info("Start")
@@ -33,7 +36,7 @@ async def test_project(dut):
         dut.rst_n.value = 0
         dut.key.value = key
         dut.iv.value = iv
-        trivium_inst = Trivium(key,iv)
+        trivium_inst = Trivium(int_to_bin_list_bitwise(key),int_to_bin_list_bitwise(iv))
         key = (key << 1) | random.randint(0, 1)
         IV = (IV << 1) | random.randint(0, 1)
         await ClockCycles(dut.clk, 1)
