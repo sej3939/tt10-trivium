@@ -2,7 +2,6 @@
 # pip install bitstring
 from collections import deque
 from itertools import repeat
-from bitstring import BitArray
 import argparse
 
 class Trivium:
