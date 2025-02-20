@@ -7,7 +7,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
-import trivium_uisyudha
+from trivium_uisyudha import Trivium
 
 @cocotb.test()
 async def test_project(dut):
