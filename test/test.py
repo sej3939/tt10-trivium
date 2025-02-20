@@ -39,4 +39,4 @@ async def test_project(dut):
     # Keep testing the module by changing the input values, waiting for
     # one or more clock cycles, and asserting the expected output values.
     # hex(int(keystream, 2))[2:].upper()
-    dut._log.info(f"keystream: {keystream}")
+    dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper()}")
