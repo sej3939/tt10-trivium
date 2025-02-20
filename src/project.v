@@ -22,6 +22,19 @@ module tt_um_example (
   assign uio_oe  = 0;
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, rst_n, 1'b0};
+    
+    reg key[79:0] = 80'h9719CFC92A9FF688F9AA; // Example key
+    reg iv[79:0] = 80'hECBB76B09AFF71D0D151; // Example IV
+    wire keystream_bit;
+    
+    trivium trivium_ASIC (
+        .clk(clk),
+        .rst(rst_n),
+        .enable(ena),
+        .key(key),
+        .iv(iv),
+        .keystream_bit(keystream_bit)
+);
 
 endmodule
