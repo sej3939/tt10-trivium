@@ -14,19 +14,16 @@ module tt_um_example (
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
+    // EXTRA IO FOR TESTING ONLY (take out for final)
+    input reg key[79:0],
+    input reg iv[79:0],
+    output wire keystream_bit
 );
 
   // All output pins must be assigned. If not used, assign to 0.
   assign uo_out  = 8'b00000000;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
-
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, rst_n, 1'b0};
-    
-    reg key[79:0] = 80'h9719CFC92A9FF688F9AA; // Example key
-    reg iv[79:0] = 80'hECBB76B09AFF71D0D151; // Example IV
-    wire keystream_bit;
     
     trivium trivium_ASIC (
         .clk(clk),
