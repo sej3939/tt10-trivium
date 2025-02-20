@@ -36,7 +36,7 @@ async def test_project(dut):
         dut.rst_n.value = 0
         dut.key.value = key
         dut.iv.value = iv
-        trivium_inst = Trivium(int_to_bin_list_bitwise(key),int_to_bin_list_bitwise(iv))
+        trivium_inst = Trivium(int_to_bin_list_bitwise(key,80),int_to_bin_list_bitwise(iv,80))
         key = (key << 1) | random.randint(0, 1)
         IV = (IV << 1) | random.randint(0, 1)
         await ClockCycles(dut.clk, 1)
