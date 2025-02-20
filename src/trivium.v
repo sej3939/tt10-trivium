@@ -18,8 +18,8 @@ module trivium (
     reg t1, t2, t3;
 
     // Initialization Phase
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
+    always @(posedge clk or negedge rst) begin
+        if (!rst) begin
             // Reset all registers
             s = 288'b0;
             initialized <= 0;
