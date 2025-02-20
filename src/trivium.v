@@ -34,8 +34,6 @@ module trivium (
             // Set the last 3 bits of s to 1 as per Trivium spec
             s[110:0] = 3'b111;
 
-            $display("s: %h", s);
-
             // Shift register state is cycled 4 full times (4*288=1152)
             for (i = 0; i < 1151; i = i + 1) begin
                 // Generate taps for shifting
@@ -48,7 +46,6 @@ module trivium (
                 s[110:0] = {t2, s[110:1]};
             end
             initialized <= 1;
-            $display("s: %h", s);
         end
     end
 
