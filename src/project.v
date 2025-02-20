@@ -17,7 +17,7 @@ module tt_um_example (
     // EXTRA IO FOR TESTING ONLY (take out for final)
     input wire [79:0] key,
     input wire [79:0] iv,
-    output wire keystream_bit
+    output reg keystream_bit
 );
 
   // All output pins must be assigned. If not used, assign to 0.
