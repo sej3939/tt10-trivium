@@ -12,6 +12,12 @@ from trivium_uisyudha import Trivium
 def int_to_bin_list_bitwise(n, bit_length):
     return [(n >> i) & 1 for i in range(bit_length - 1, -1, -1)]
 
+def bin_list_to_int_bitwise(bin_list):
+    num = 0
+    for bit in bin_list:
+        num = (num << 1) | bit
+    return num
+
 @cocotb.test()
 async def test_project(dut):
     dut._log.info("Start")
@@ -46,7 +52,7 @@ async def test_project(dut):
         for j in range(0,80):
             await ClockCycles(dut.clk, 1)
             keystream += str(dut.keystream_bit.value)
-        assert int(keystream, 2) == int("".join(map(trivium_inst.keystream(80), bits)), 2)
+        assert int(keystream, 2) == bin_list_to_int_bitwise(trivium_inst.keystream(80))
         
 
     # Keep testing the module by changing the input values, waiting for
