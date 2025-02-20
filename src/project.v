@@ -15,8 +15,8 @@ module tt_um_example (
     input  wire       clk,      // clock
     input  wire       rst_n,     // reset_n - low to reset
     // EXTRA IO FOR TESTING ONLY (take out for final)
-    input wire key[79:0],
-    input wire iv[79:0],
+    input wire [79:0] key,
+    input wire [79:0] iv,
     output wire keystream_bit
 );
 
@@ -29,8 +29,8 @@ module tt_um_example (
         .clk(clk),
         .rst(rst_n),
         .enable(ena),
-        .key(key[79:0]),
-        .iv(iv[79:0]),
+        .key(key),
+        .iv(iv),
         .keystream_bit(keystream_bit)
 );
 
