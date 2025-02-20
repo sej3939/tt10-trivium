@@ -5,6 +5,8 @@ module trivium_tb;
     wire keystream_bit;
     integer i;
 
+    reg[79:0] keystream;
+
     trivium uut (
         .clk(clk),
         .rst(rst),
@@ -29,12 +31,14 @@ module trivium_tb;
         #10 init = 1;  // Load key and IV
         #10 init = 0;  
         #10 enable = 1; // Start generating keystream
+        #10;
 
         // Print keystream on console
-        for (i = 0; i < 1000; i = i + 1)
-            #5 $display("Time: %0t | Keystream bit: %b", $time, keystream_bit);
+        for (i = 0; i < 80; i = i + 1)
+            #10 keystream[79-i] = keystream_bit;
 
-        #5 $stop; // Stop simulation after a few cycles
+        #5 $display("Time: %0t | Keystream: %h", $time, keystream);
+        $stop; // Stop simulation after a few cycles
     end
 
 endmodule
