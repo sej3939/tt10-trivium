@@ -1,7 +1,6 @@
 module trivium (
     input wire clk,
     input wire rst,         // Reset signal
-    input wire init,        // Initialization trigger
     input wire enable,      // Enable encryption
     input wire [79:0] key,  // 80-bit key
     input wire [79:0] iv,   // 80-bit IV
@@ -24,7 +23,7 @@ module trivium (
             s = 288'b0;
             initialized <= 0;
         end
-        else if (init && !initialized) begin
+        else if (!initialized) begin
             // Load key into s
             s[287:208] = key[79:0];
 
