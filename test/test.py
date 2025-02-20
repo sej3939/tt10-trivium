@@ -37,7 +37,7 @@ async def test_project(dut):
             keystream = 0
         else:
             keystream = keystream << 1
-            keystream += dut.keystream_bit.value
+            keystream += int(dut.keystream_bit.value)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
