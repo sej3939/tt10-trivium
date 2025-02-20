@@ -37,8 +37,8 @@ async def test_project(dut):
     key = 0x9719CFC92A9FF688F9AA
     iv = 0xECBB76B09AFF71D0D151
     # Wait for clock cycles to see the output values
-    keystream = ""
     for i in range(0,10):
+        keystream = ""
         dut.rst_n.value = 0
         dut.key.value = key
         dut.iv.value = iv
