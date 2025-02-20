@@ -21,7 +21,7 @@ async def test_project(dut):
     dut.ui_in.value = 0
     dut.rst_n.value = 0
     dut.key.value = 0x9719CFC92A9FF688F9AA
-    dut.IV.value = 0xECBB76B09AFF71D0D151
+    dut.iv.value = 0xECBB76B09AFF71D0D151
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
