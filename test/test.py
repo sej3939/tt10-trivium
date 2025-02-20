@@ -24,7 +24,7 @@ async def test_project(dut):
     dut.rst_n.value = 1
 
     dut._log.info("Test project behavior")
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 3)
     # Set the input values you want to test
 
     # Wait for clock cycles to see the output values
