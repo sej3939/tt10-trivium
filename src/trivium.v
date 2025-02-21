@@ -29,10 +29,6 @@ module trivium (
             s[2:0] <= 3'b111;
             initialized <= 0;
         end
-    end
-
-    // Keystream Generation
-    always @(posedge clk) begin
         if (enable) begin
             // Generate taps for keystream
             t1 = s[222] ^ s[195];
