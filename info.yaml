@@ -33,7 +33,7 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
+  uo[0]: "keystream_bit"
   uo[1]: ""
   uo[2]: ""
   uo[3]: ""
