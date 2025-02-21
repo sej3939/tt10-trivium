@@ -23,6 +23,8 @@ module tt_um_example (
   assign uo_out[7:1]  = 7'b00000000;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
+
+    wire _unused = &{ui_in, uio_in, 1'b0};
     
     trivium trivium_ASIC (
         .clk(clk),
