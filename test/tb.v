@@ -25,8 +25,6 @@ module tb ();
    // EXTRA IO
   reg [79:0] key;
   reg [79:0] iv;
-  reg keystream_bit;
-
 `ifdef GL_TEST
   wire VPWR = 1'b1;
   wire VGND = 1'b0;
@@ -50,8 +48,7 @@ module tb ();
       .clk    (clk),      // clock
       .rst_n  (rst_n),     // not reset
       .key    (key),
-      .iv     (iv),
-      .keystream_bit   (keystream_bit)
+      .iv     (iv)
   );
 
 endmodule
