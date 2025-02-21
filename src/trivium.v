@@ -10,7 +10,7 @@ module trivium (
     // Trivium shift register
     reg [287:0] s;
 
-    integer i;
+    reg [10:0] i;
     reg initialized = 0;
 
     // Feedback taps for keystream
@@ -29,6 +29,7 @@ module trivium (
             s[2:0] <= 3'b111;
             initialized <= 0;
         end
+    end
 
     // Keystream Generation
     always @(posedge clk) begin
@@ -54,8 +55,8 @@ module trivium (
             s[110:0] <= {t2, s[110:1]};
 
             // initialize counter
-            i += 1;
-            if i == 1152 begin
+            i = i + 1;
+            if (i == 1152) begin
                 initialized = 1;
             end
         end
