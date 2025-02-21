@@ -24,6 +24,8 @@ module tt_um_example (
   assign uio_out = 0;
   assign uio_oe  = 0;
 
+  wire _unused = &{ui_in, uio_in, 1'b0};
+
     
     trivium trivium_ASIC (
         .clk(clk),
