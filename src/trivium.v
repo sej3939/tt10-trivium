@@ -20,7 +20,7 @@ module trivium (
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             // Reset all registers
-            s = 288'b0;
+            s <= 288'b0;
             initialized <= 0;
         end
         else if (!initialized) begin
@@ -31,7 +31,7 @@ module trivium (
             s[194:115] = iv[79:0];
 
             // Set the last 3 bits of s to 1 as per Trivium spec
-            s[110:0] = 3'b111;
+            s[2:0] = 3'b111;
 
             // Shift register state is cycled 4 full times (4*288=1152)
             for (i = 0; i < 1151; i = i + 1) begin
@@ -40,9 +40,9 @@ module trivium (
                 t2 = s[126] ^ s[111] ^ (s[112] & s[113]) ^ s[24];
                 t3 = s[45] ^ s[0] ^ (s[2] & s[1]) ^ s[219];
                 // Shift registers and insert feedback
-                s[287:195] = {t3, s[287:196]};
-                s[194:111] = {t1, s[194:112]};
-                s[110:0] = {t2, s[110:1]};
+                s[287:195] <= {t3, s[287:196]};
+                s[194:111] <= {t1, s[194:112]};
+                s[110:0] <= {t2, s[110:1]};
             end
             initialized <= 1;
         end
@@ -65,9 +65,9 @@ module trivium (
             t3 = t3 ^ (s[2] & s[1]) ^ s[219];
 
             // Shift registers and insert feedback
-            s[287:195] = {t3, s[287:196]};
-            s[194:111] = {t1, s[194:112]};
-            s[110:0] = {t2, s[110:1]};
+            s[287:195] <= {t3, s[287:196]};
+            s[194:111] <= {t1, s[194:112]};
+            s[110:0] <= {t2, s[110:1]};
         end
     end
 
