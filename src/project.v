@@ -13,11 +13,11 @@ module tt_um_example (
     output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
-    input  wire       rst_n,     // reset_n - low to reset
+    input  wire       rst_n     // reset_n - low to reset
     // EXTRA IO FOR TESTING ONLY (take out for final)
-    input wire [79:0] key,
-    input wire [79:0] iv,
 );
+  wire [79:0] key;
+  wire [79:0] iv;
 
   // All output pins must be assigned. If not used, assign to 0.
   assign uo_out[7:1]  = 7'b00000000;  // Example: ou_out is the sum of ui_in and uio_in
