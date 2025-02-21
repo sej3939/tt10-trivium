@@ -29,34 +29,19 @@ module trivium (
             s[2:0] <= 3'b111;
             initialized <= 0;
         end
-        else if (!initialized) begin
-            
-
-            // Shift register state is cycled 4 full times (4*288=1152)
-            for (i = 0; i < 1151; i = i + 1) begin
-                // Generate taps for shifting
-                t1 = s[222] ^ s[195] ^ (s[196] & s[197]) ^ s[117];
-                t2 = s[126] ^ s[111] ^ (s[112] & s[113]) ^ s[24];
-                t3 = s[45] ^ s[0] ^ (s[2] & s[1]) ^ s[219];
-                // Shift registers and insert feedback
-                s[287:195] <= {t3, s[287:196]};
-                s[194:111] <= {t1, s[194:112]};
-                s[110:0] <= {t2, s[110:1]};
-            end
-            initialized <= 1;
-        end
-    end
 
     // Keystream Generation
     always @(posedge clk) begin
-        if (initialized && enable) begin
+        if (enable) begin
             // Generate taps for keystream
             t1 = s[222] ^ s[195];
             t2 = s[126] ^ s[111];
             t3 = s[45] ^ s[0];
 
-            // Generate keystream bit
-            keystream_bit = t1 ^ t2 ^ t3;
+            if (initialized) begin
+                // Generate keystream bit
+                keystream_bit = t1 ^ t2 ^ t3;
+            end
 
             // Generate taps for shifting
             t1 = t1 ^ (s[196] & s[197]) ^ s[117];
@@ -67,6 +52,12 @@ module trivium (
             s[287:195] <= {t3, s[287:196]};
             s[194:111] <= {t1, s[194:112]};
             s[110:0] <= {t2, s[110:1]};
+
+            // initialize counter
+            i += 1;
+            if i == 1152 begin
+                initialized = 1;
+            end
         end
     end
 
