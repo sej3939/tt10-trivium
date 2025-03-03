@@ -7,8 +7,8 @@ module trivium (
 
     wire key[79:0];
     wire iv[79:0];
-    assign key = 80'h9719CFC92A9FF688F9AA;
-    assign iv = 80'hECBB76B09AFF71D0D151;
+    assign key[79:0] = 80'h9719CFC92A9FF688F9AA;
+    assign iv[79:0] = 80'hECBB76B09AFF71D0D151;
     // Trivium shift register
     reg [287:0] s;
 
