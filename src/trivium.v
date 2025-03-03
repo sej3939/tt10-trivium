@@ -2,11 +2,11 @@ module trivium (
     input wire clk,
     input wire rst,         // Reset signal
     input wire enable,      // Enable encryption
-    input wire [79:0] key,  // 80-bit key
-    input wire [79:0] iv,   // 80-bit IV
     output reg keystream_bit // Output keystream bit
 );
 
+    wire key = 8'h9719CFC92A9FF688F9AA
+    wire iv = 8'hECBB76B09AFF71D0D151
     // Trivium shift register
     reg [287:0] s;
 
