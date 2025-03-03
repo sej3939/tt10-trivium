@@ -14,10 +14,7 @@ module tt_um_example (
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
-    // EXTRA IO FOR TESTING ONLY (take out for final)
 );
-    wire [79:0] key = 80'h9719CFC92A9FF688F9AA;
-    wire [79:0] iv = 80'hECBB76B09AFF71D0D151;
 
   // All output pins must be assigned. If not used, assign to 0.
   assign uo_out[7:1]  = 7'b00000000;  // Example: ou_out is the sum of ui_in and uio_in
