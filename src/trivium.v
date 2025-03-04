@@ -5,8 +5,8 @@ module trivium (
     output reg keystream_bit // Output keystream bit
 );
 
-    wire [79:0] key = 80'h9719CFC92A9FF688F9AA;;
-    wire [79:0] iv = 80'hECBB76B09AFF71D0D151;;
+    wire [79:0] key = 80'h9719CFC92A9FF688F9AA;
+    wire [79:0] iv = 80'hECBB76B09AFF71D0D151;
     // Trivium shift register
     reg [287:0] s;
 
