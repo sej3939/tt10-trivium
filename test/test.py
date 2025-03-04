@@ -47,7 +47,7 @@ async def test_project(dut):
         #iv = ((iv << 1) | random.randint(0, 1)) & ((1 << 80) - 1)
         await ClockCycles(dut.clk, 1)
         dut.rst_n.value = 1
-        await ClockCycles(dut.clk, 1155)
+        await ClockCycles(dut.clk, 4)
         
         for j in range(0,80):
             await ClockCycles(dut.clk, 1)
