@@ -49,11 +49,11 @@ async def test_project(dut):
         dut.rst_n.value = 1
         await ClockCycles(dut.clk, 1153)
         
-        for j in range(0,80):
+        for j in range(0,2000):
             await ClockCycles(dut.clk, 1)
             keystream += str(dut.uo_out[0].value)
-        actual_keystream = trivium_inst.keystream(80)
-        dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper().zfill(20)}, actual keystream: {hex(bin_list_to_int_bitwise(actual_keystream))[2:].upper().zfill(20)}")
+        actual_keystream = trivium_inst.keystream(2000)
+        dut._log.info(f"keystream: {hex(int(keystream, 2))[2:].upper().zfill(500)}, actual keystream: {hex(bin_list_to_int_bitwise(actual_keystream))[2:].upper().zfill(500)}")
         #assert int(keystream, 2) == bin_list_to_int_bitwise(actual_keystream)
         
 
