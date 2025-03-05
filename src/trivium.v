@@ -52,7 +52,7 @@ module trivium (
             s[110:0] <= {t2_new, s[110:1]};
 
             // initialize counter
-            i = i + 1;
+            i <= i + 1;
             if (i == 1152) begin
                 initialized <= 1;
             end
