@@ -37,7 +37,7 @@ module trivium (
 
             if (initialized) begin
                 // Generate keystream bit
-                keystream_bit = t1 ^ t2 ^ t3;
+                keystream_bit <= t1 ^ t2 ^ t3;
             end
             // Generate taps for shifting
             t1 = t1 ^ (s[196] & s[197]) ^ s[117];
