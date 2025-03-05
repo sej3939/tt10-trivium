@@ -53,7 +53,7 @@ module trivium (
 
             // initialize counter
             i <= i + 1;
-            if (i == 1153) begin
+            if (i == 1151) begin
                 initialized <= 1;
             end
         end
