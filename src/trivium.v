@@ -51,7 +51,8 @@ module trivium (
 
             // initialize counter
             i <= i + 1;
-            if (i == 1152) begin
+            // one off 1152 because of non-blocking assignment
+            if (i == 1151) begin
                 initialized <= 1;
             end
         end
