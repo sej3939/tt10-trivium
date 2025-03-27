@@ -4,8 +4,8 @@
 //design adapted from Dennis Du and modified for Trivium
 
 module trivium_top(
-    input wire [7:0] serial_in, //input for rx data 
-    output wire [7:0] serial_out, //output for tx data
+    input wire serial_in, //input for rx data 
+    output wire serial_out, //output for tx data
     input  wire       ena,      // Always 1 when the design is powered
     input  wire       clk,      // System clock (should be 100MHz on Basys 3)
     input  wire       rst_n     // Active low reset
