@@ -1,9 +1,9 @@
 module trivium (
     input wire clk,
     input wire rst_n,       // Reset signal
-    input wire enable,      // Enable encryption
+    input wire keystream_read,  // Control logic if keystream has been read
     output reg [7:0] keystream_byte,   // Output keystream bit
-    output reg keystream_valid    // Keystream valid flag
+    output reg keystream_valid  // Keystream valid flag
 );
 
     parameter [79:0] key = 80'h9719CFC92A9FF688F9AA;
@@ -38,11 +38,13 @@ module trivium (
             s[114:3] <= 0;
             // Set the last 3 bits of s to 1 as per Trivium spec
             s[2:0] <= 3'b111;
+            keystream_valid <= 0;
             init_cnt <= 0;
             init_flag <= 0;
             keystream_cnt <= 7;
         end
-        else if (enable) begin
+        // Start encryption if keystream is not valid or keystream is read
+        else if (!keystream_valid || keystream_read) begin
             // Generate keystream bit
             if (init_flag) begin
                 keystream_byte[keystream_cnt] <= t1 ^ t2 ^ t3;
