@@ -103,7 +103,7 @@ module trivium_top(
         fifo_rd_en <= 0;
         if (!rst_n) begin
         end else begin
-            if (urx_valid && !fifo_full && keystream_valid) begin
+            if (!fifo_full && keystream_valid) begin
                 encrypted_data <= urx_data ^ keystream_byte;
             end
             fifo_wr_en <= 1;
