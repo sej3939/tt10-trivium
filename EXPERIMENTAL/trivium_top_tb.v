@@ -52,7 +52,7 @@ module trivium_top_tb;
             
             // Transmit 8 data bits (LSB first)
             for (j = 0; j < 8; j = j + 1) begin
-                serial_in = data[j][i];
+                serial_in = data[i][j];
                 #104160; // Wait one bit period
             end
             
