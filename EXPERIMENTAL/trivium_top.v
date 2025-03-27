@@ -47,7 +47,7 @@ module trivium_top(
     //instantiate UART Receiver
     uart_rx #(
         .CLK_FREQ(CLK_FREQ),
-        .BAUD(BAUD_RATE)
+        .BAUD_RATE(BAUD_RATE)
     )
     uart_rx_inst(
         .rx_data(urx_data),
@@ -62,7 +62,7 @@ module trivium_top(
     //instantiate UART Transmitter 
     uart_tx #(
         .CLK_FREQ(CLK_FREQ),
-        .BAUD(BAUD_RATE)
+        .BAUD_RATE(BAUD_RATE)
     )
     uart_tx_inst(
         .tx_ready(utx_ready),
