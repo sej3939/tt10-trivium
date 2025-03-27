@@ -1,33 +1,33 @@
 module trivium_tb;
-    reg clk, rst, enable;
-    wire keystream_bit;
+    reg clk, rst_n, enable;
+    wire keystream_valid;
     integer i;
 
-    reg[79:0] keystream;
+    wire [7:0] keystream_byte;
 
     trivium uut (
         .clk(clk),
-        .rst(rst),
+        .rst_n(rst_n),
         .enable(enable),
-        .keystream_bit(keystream_bit)
+        .keystream_byte(keystream_byte),
+        .keystream_valid(keystream_valid)
     );
 
     always #5 clk = ~clk; // Clock toggle every 5 time units
 
     initial begin
         clk = 0;
-        rst = 0;
+        rst_n = 0;
         enable = 1; // Enable module
         
-        #10 rst = 1;   // Release reset
+        #10 rst_n = 1;   // Release reset
         #11520;
 
         // Print keystream on console
         for (i = 0; i < 80; i = i + 1) begin
-            #10 keystream[79-i] = keystream_bit;
+            #10 if (keystream_valid)
+                $display("Time: %0t | Keystream: %h", $time, keystream_byte);
         end
-
-        #5 $display("Time: %0t | Keystream: %h", $time, keystream);
         $stop; // Stop simulation after a few cycles
     end
 
