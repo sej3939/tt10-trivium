@@ -26,7 +26,7 @@ module trivium_top(
     wire [7:0] urx_data; 
     wire [7:0] utx_data; 
 
-    //wire urx_valid; 
+    wire urx_valid; 
     wire utx_valid;
     wire utx_ready; 
 
@@ -50,7 +50,7 @@ module trivium_top(
     )
     uart_rx_inst(
         .rx_data(urx_data),
-        .rx_valid(keystream_valid),
+        .rx_valid(urx_valid),
         .received_bit(rx),
         .rst_n(rst_n),
         .clk(clk)
@@ -103,7 +103,7 @@ module trivium_top(
         fifo_rd_en <= 0;
         if (!rst_n) begin
         end else begin
-            if (!fifo_full && keystream_valid) begin
+            if (urx_valid && !fifo_full && keystream_valid) begin
                 encrypted_data <= urx_data ^ keystream_byte;
             end
             fifo_wr_en <= 1;
