@@ -16,11 +16,9 @@ module trivium_top(
     parameter BAUD_RATE = 9600; //9600 BAUD rate 
     
     //signals for uart pins on FPGA
-    wire rx = serial_in[0]; //rx input connection 
+    wire rx = serial_in; //rx input connection 
     wire tx; 
-    assign serial_out[0] = tx; //tx output connection 
-    assign serial_out[7:1] = 7'b0; //set the upper bits to 0 for now
-
+    assign serial_out = tx; //tx output connection 
 
     //internal wires for UART modules
     wire [7:0] urx_data; 
