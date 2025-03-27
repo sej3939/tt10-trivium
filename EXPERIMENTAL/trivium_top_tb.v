@@ -2,7 +2,7 @@
 
 module trivium_top_tb;
     
-    reg serial_in;
+    reg [7:0] serial_in;
     wire [7:0] serial_out;
     reg ena;
     reg clk;
