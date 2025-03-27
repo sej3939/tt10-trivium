@@ -18,6 +18,15 @@ module trivium_top_tb;
         .clk(clk),
         .rst_n(rst_n)
     );
+
+    wire [79:0] keystream = 80'h83681F7BDC06AD483BF3;
+    wire [79:0] test_data = 80'hA53C7FC19942E7B85DF0;
+
+    wire [79:0] encrypted = test_data;//keystream ^ test_data;
+
+    reg [2:0] counter;
+    reg [79:0] output_data;
+    reg transmitting;
     
     // Clock generation (100MHz -> 10ns period)
     always #5 clk = ~clk;
@@ -63,12 +72,25 @@ module trivium_top_tb;
         
         // Finish simulation
         #1000000;
+        $display("correct output: %h, output_data: %h", encrypted, output_data);
         $finish;
     end
-    
-    // Monitor output
-    initial begin
-        $monitor("Time = %0t, Serial In = %b, Serial Out = %h", $time, serial_in, serial_out);
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            counter <= 0;
+            transmitting <= 0;
+            output_data <= 0;
+        end
+        else if (!serial_out || transmitting) begin
+            counter <= counter += 1;
+            if (counter == 7) begin
+                transmitting <= 0;
+            end else begin
+                transmitting <= 1;
+            end
+        end
+
     end
     
 endmodule
