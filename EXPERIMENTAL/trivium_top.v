@@ -37,7 +37,7 @@ module trivium_top(
     wire [7:0] fifo_data_out; //data read from fifo 
 
     //encryption logic buffer
-    reg [7:0] encrypted data; 
+    reg [7:0] encrypted_data; 
     
     //instantiate UART Receiver
     uart_rx #(
