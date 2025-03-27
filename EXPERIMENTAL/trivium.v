@@ -2,8 +2,8 @@ module trivium (
     input wire clk,
     input wire rst_n,       // Reset signal
     input wire enable,      // Enable encryption
-    output reg keystream_bit,   // Output keystream bit
-    output reg init_flag    // Initialization flag
+    output reg [7:0] keystream_byte,   // Output keystream bit
+    output reg keystream_valid    // Keystream valid flag
 );
 
     parameter [79:0] key = 80'h9719CFC92A9FF688F9AA;
@@ -13,6 +13,8 @@ module trivium (
     
     // Initialization counter
     reg [10:0] init_cnt;
+    reg init_flag;
+    reg [2:0] keystream_cnt;
 
     // Feedback taps for keystream
     wire t1, t2, t3;
@@ -38,11 +40,18 @@ module trivium (
             s[2:0] <= 3'b111;
             init_cnt <= 0;
             init_flag <= 0;
+            keystream_cnt <= 7;
         end
         else if (enable) begin
             // Generate keystream bit
-            if (init_flag)
-                keystream_bit <= t1 ^ t2 ^ t3;
+            if (init_flag) begin
+                keystream_byte[keystream_cnt] <= t1 ^ t2 ^ t3;
+                keystream_cnt <= keystream_cnt - 1;
+                if (keystream_cnt == 0)
+                    keystream_valid <= 1;
+                else
+                    keystream_valid <= 0;
+            end
             
             // Shift registers and insert feedback
             s[287:195] <= {t3_new, s[287:196]};
