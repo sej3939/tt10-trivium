@@ -37,7 +37,12 @@ module trivium_top(
     wire [7:0] fifo_data_out; //data read from fifo 
 
     //encryption logic buffer
-    reg [7:0] encrypted_data; 
+    reg [7:0] encrypted_data;
+
+    //Trivium signals
+    reg keystream_read;
+    wire [7:0] keystream_byte;
+    wire keystream_valid;
     
     //instantiate UART Receiver
     uart_rx #(
@@ -87,12 +92,32 @@ module trivium_top(
 
 
     //instantiate the Trivium module
-
-
+    trivium trivium_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .keystream_read(keystream_read),
+        .keystream_byte(keystream_byte),
+        .keystream_valid(keystream_valid)
+    );
 
     //character encryption and FIFO control
-    
-    
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            fifo_wr_en <= 0;
+            fifo_rd_en <= 0;
+        end else begin
+            fifo_wr_en <= 0;
+            fifo_rd_en <= 0;
+            if (urx_valid && !fifo_full && keystream_valid) begin
+                encrypted_data <= urx_data ^ keystream_byte;
+                fifo_wr_en <= 1;
+            end
+            if (utx_ready && !fifo_empty) begin
+                fifo_rd_en <= 1;  // Read from FIFO
+            end
+        end
+    end
+        
     assign utx_data = fifo_data_out;
 
 endmodule
