@@ -26,7 +26,7 @@ module trivium_top(
     wire [7:0] urx_data; 
     wire [7:0] utx_data; 
 
-    wire urx_valid; 
+    //wire urx_valid; 
     wire utx_valid;
     wire utx_ready; 
 
@@ -50,7 +50,7 @@ module trivium_top(
     )
     uart_rx_inst(
         .rx_data(urx_data),
-        .rx_valid(urx_valid),
+        .rx_valid(keystream_valid),
         .received_bit(rx),
         .rst_n(rst_n),
         .clk(clk)
