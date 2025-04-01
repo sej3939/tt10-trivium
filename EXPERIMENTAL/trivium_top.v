@@ -106,9 +106,13 @@ module trivium_top(
         end else begin
             fifo_wr_en <= 0;
             fifo_rd_en <= 0;
-            if (urx_valid && !fifo_full) begin
-                encrypted_data <= urx_data;
+            if (keystream_valid && urx_valid && !fifo_full) begin
+                $display("urx_data: %h, keystream_byte: %h", urx_data, keystream_byte);
+                encrypted_data <= urx_data ^ keystream_byte;
+                keystream_read <= 1;
                 fifo_wr_en <= 1;
+            end else begin
+                keystream_read <= 0;
             end
             if (utx_ready && !fifo_empty) begin
                 fifo_rd_en <= 1;  // Read from FIFO
