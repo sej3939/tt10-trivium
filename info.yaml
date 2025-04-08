@@ -11,19 +11,22 @@ project:
   tiles: "1x2"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_trivium_top"
 
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
+    - "fifo.v"
     - "trivium.v"
+    - "trivium_top.v"
+    - "uart_rx.v"
+    - "uart_tx.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
+  ui[0]: "serial_in"
   ui[1]: ""
   ui[2]: ""
   ui[3]: ""
@@ -33,7 +36,7 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: "keystream_bit"
+  uo[0]: "serial_out"
   uo[1]: ""
   uo[2]: ""
   uo[3]: ""
