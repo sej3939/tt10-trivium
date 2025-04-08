@@ -3,9 +3,12 @@
 
 //design adapted from Dennis Du and modified for Trivium
 
-module trivium_top(
-    input wire serial_in, //input for rx data 
-    output wire serial_out, //output for tx data
+module tt_um_trivium_top (
+    input wire [7:0] ui_in, //input for rx data 
+    output wire [7:0] uo_out,   // output for tx data
+    input  wire [7:0] uio_in,   // IOs: Input path
+    output wire [7:0] uio_out,  // IOs: Output path
+    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
     input  wire       ena,      // Always 1 when the design is powered
     input  wire       clk,      // System clock (should be 100MHz on Basys 3)
     input  wire       rst_n     // Active low reset
@@ -13,7 +16,17 @@ module trivium_top(
 
     //necessary parameters
     parameter CLK_FREQ = 100000000; //100MHz clock of Basys 3 FPGA
-    parameter BAUD_RATE = 9600; //9600 BAUD rate 
+    parameter BAUD_RATE = 9600; //9600 BAUD rate
+
+    // Connect IO with serial portts
+    wire serial_in;
+    wire serial_out;
+    assign ui_in[0] = serial_in;
+    assign ui_out[0] = serial_out;
+    assign ui_out[7:1] = 0;
+    assign uio_out = 0;
+    assign uio_oe = 0;
+    wire _unused = &{ui_in, uio_in, 1'b0};
     
     //signals for uart pins on FPGA
     wire rx = serial_in; //rx input connection 
