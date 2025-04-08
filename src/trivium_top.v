@@ -22,8 +22,8 @@ module tt_um_trivium_top (
     wire serial_in;
     wire serial_out;
     assign ui_in[0] = serial_in;
-    assign ui_out[0] = serial_out;
-    assign ui_out[7:1] = 0;
+    assign uo_out[0] = serial_out;
+    assign uo_out[7:1] = 0;
     assign uio_out = 0;
     assign uio_oe = 0;
     wire _unused = &{ui_in, uio_in, 1'b0};
