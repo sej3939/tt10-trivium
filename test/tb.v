@@ -51,4 +51,12 @@ module tb ();
       .rst_n  (rst_n)     // not reset
   );
 
+   uart_rx uart_rx_inst (
+        .rx_data(rx_data),
+        .rx_valid(rx_valid),
+        .received_bit(uo_out[0]),
+        .clk(clk),
+        .rst_n(rst_n),
+        .encryption_done(enc_done_dummy)
+    );
 endmodule
