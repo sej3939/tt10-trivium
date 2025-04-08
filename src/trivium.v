@@ -1,17 +1,20 @@
 module trivium (
     input wire clk,
-    input wire rst,         // Reset signal
-    input wire enable,      // Enable encryption
-    output reg keystream_bit // Output keystream bit
+    input wire rst_n,       // Reset signal
+    input wire keystream_read,  // Control logic if keystream has been read
+    output reg [7:0] keystream_byte,   // Output keystream bit
+    output reg keystream_valid  // Keystream valid flag
 );
 
     parameter [79:0] key = 80'h9719CFC92A9FF688F9AA;
     parameter [79:0] iv = 80'hECBB76B09AFF71D0D151;
     // Trivium shift register
     reg [287:0] s;
-
-    reg [10:0] i = 0;
-    reg initialized = 0;
+    
+    // Initialization counter
+    reg [10:0] init_cnt;
+    reg init_flag;
+    reg [2:0] keystream_cnt;
 
     // Feedback taps for keystream
     wire t1, t2, t3;
@@ -23,10 +26,10 @@ module trivium (
     assign t1_new = t1 ^ (s[196] & s[197]) ^ s[117];
     assign t2_new = t2 ^ (s[112] & s[113]) ^ s[24];
     assign t3_new = t3 ^ (s[2] & s[1]) ^ s[219];
-
+    
     // Initialization Phase
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
             // Load key into s
             s[287:208] <= key[79:0];
             s[207:193] <= 0;
@@ -35,13 +38,21 @@ module trivium (
             s[114:3] <= 0;
             // Set the last 3 bits of s to 1 as per Trivium spec
             s[2:0] <= 3'b111;
-            i <= 0;
-            initialized <= 0;
+            keystream_valid <= 0;
+            init_cnt <= 0;
+            init_flag <= 0;
+            keystream_cnt <= 7;
         end
-        else if (enable) begin
-            if (initialized) begin
-                // Generate keystream bit
-                keystream_bit <= t1 ^ t2 ^ t3;
+        // Start encryption if keystream is not valid or keystream is read
+        else if (!keystream_valid || keystream_read) begin
+            // Generate keystream bit
+            if (init_flag) begin
+                keystream_byte[keystream_cnt] <= t1 ^ t2 ^ t3;
+                keystream_cnt <= keystream_cnt - 1;
+                if (keystream_cnt == 0)
+                    keystream_valid <= 1;
+                else
+                    keystream_valid <= 0;
             end
             
             // Shift registers and insert feedback
@@ -50,11 +61,10 @@ module trivium (
             s[110:0] <= {t2_new, s[110:1]};
 
             // initialize counter
-            i <= i + 1;
-            // one off 1152 because of non-blocking assignment
-            if (i == 1151) begin
-                initialized <= 1;
-            end
+            if (init_cnt == 1151)
+                init_flag <= 1;
+            else
+                init_cnt <= init_cnt + 1;
         end
     end
 
