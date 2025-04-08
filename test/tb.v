@@ -22,7 +22,11 @@ module tb ();
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
-   // EXTRA IO
+   // EXTRA IO for uart_rx
+   wire [7:0] rx_data;
+   wire rx_valid;
+   wire enc_done_dummy;
+   assign enc_done_dummy = 1;
 `ifdef GL_TEST
   wire VPWR = 1'b1;
   wire VGND = 1'b0;
