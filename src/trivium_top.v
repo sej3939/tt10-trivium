@@ -21,7 +21,7 @@ module tt_um_trivium_top (
     // Connect IO with serial portts
     wire serial_in;
     wire serial_out;
-    assign ui_in[0] = serial_in;
+    assign serial_in = ui_in[0];
     assign uo_out[0] = serial_out;
     assign uo_out[7:1] = 0;
     assign uio_out = 0;
