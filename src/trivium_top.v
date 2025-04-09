@@ -1,8 +1,6 @@
 `default_nettype none
 `timescale 1ns/1ps 
 
-//design adapted from Dennis Du and modified for Trivium
-
 module tt_um_trivium_top (
     input wire [7:0] ui_in, //input for rx data 
     output wire [7:0] uo_out,   // output for tx data
