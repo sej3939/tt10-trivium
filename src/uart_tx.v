@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-//Design adapted from Dennis Du
+//help taken from Dennis Du for UART
 
 module uart_tx
 #(
