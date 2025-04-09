@@ -1,5 +1,7 @@
 `timescale 1ns/1ps
 
+//help taken from Dennis Du for UART
+
 module uart_rx
 #(
     parameter CLK_FREQ = 100000000,
